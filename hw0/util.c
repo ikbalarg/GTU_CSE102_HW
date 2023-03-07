@@ -31,27 +31,72 @@ void fraction_div(int n1, int d1, int n2, int d2, int * n3, int * d3) {
 
 /* Simplify the given fraction such that they are divided by their GCD */
 void fraction_simplify(int * n, int * d) {
-    int common=1;
-    if (*n==*d){
-        common=*n;
-    }
-    else if (*n>*d){
-        int i=1;
-        while (i<*d){
-            if (((*n/i)==0)&&((*d/i)==0)){
-                common=i;
+    if (*n>=0 & *d>=0){
+        int common=1;
+        if (*n==*d){
+            common=*n;
+        }
+        else if (*n>*d){
+            int i=1;
+            while (i<*d+1){
+                if (((*n%i)==0)&((*d%i)==0)){
+                    common=i;
+                }
+                i++;
             }
-            i++;
+        }
+        else if (*n<*d){
+            int i=1;
+            while (i<*n+1){
+                if (((*n%i)==0)&((*d%i)==0)){
+                    common=i;
+                }
+                i++;
+            }
+        }
+        int n1,d1;
+        n1=*n/common;
+        d1=*d/common;
+        *n=n1;
+        *d=d1;
+    }
+    else{
+        if(*n<0){
+            *n=*n*(-1);
+        }
+        if(*d<0){
+            *d=*d*(-1);
+        }
+        if (*n>=0 & *d>=0){
+            int common=1;
+            if (*n==*d){
+                common=*n;
+            }
+            else if (*n>*d){
+                int i=1;
+                while (i<*d+1){
+                    if (((*n%i)==0)&((*d%i)==0)){
+                        common=i;
+                    }
+                    i++;
+                }
+            }
+            else if (*n<*d){
+                int i=1;
+                while (i<*n+1){
+                    if (((*n%i)==0)&((*d%i)==0)){
+                        common=i;
+                    }
+                    i++;
+                }
+            }
+            int n1,d1;
+            n1=*n/common;
+            d1=*d/common;
+            *n=-1*n1;
+            *d=d1;
         }
     }
-    else if (*n<*d){
-        int i=1;
-        while (i<*n){
-            if (((*n/i)==0)&&((*d/i)==0)){
-                common=i;
-            }
-            i++;
-        }
-    }
+            
     
 } /* end fraction_div */
