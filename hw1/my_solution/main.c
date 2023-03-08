@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 void find_gcd(int num1,int num2);
+void add_function(int num1,int num2);
 int main() {
     int num1;
     int num2;
@@ -18,6 +19,7 @@ int main() {
         scanf("%d",&num2);
         printf("First Number : %d \nSecond Number : %d\n",num1,num2);
         find_gcd(num1,num2);
+        add_function(num1,num2);
         printf("\nIf you want to continue press any numerical key except 0...\n");
         scanf("%d",&check);
     }
@@ -52,4 +54,9 @@ void find_gcd(int num1,int num2){
         }
     }
 
+}
+void add_function(int num1,int num2){
+    int num3;
+    num3=num2+num1;
+    printf("Result:\n\t %5d\n\t %5d\n\t+\n\t-------\n\t %5d",num1,num2,num3);
 }
