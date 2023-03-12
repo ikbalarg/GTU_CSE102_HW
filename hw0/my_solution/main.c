@@ -44,16 +44,24 @@ int main() {
              multiplication and division results...
     */
     int num4,num5,num6; /* Variables created to store the numerator values*/
-    int den4,den5,den6;/* Variables created to store the denumerator values.*/
-    printf("Give numerator of first fractional number : ");
-    scanf("%d",&num4);
-    printf("\nGive denominator of first fractional number:  ");
-    scanf("%d",&den4);
-    printf("\nGive numerator of second fractional number : ");
-    scanf("%d",&num5);
-    printf("\nGive denominator of second fractional number:  ");
+    int den4,den5,den6;/* Variables created to store the denominator values.*/
+    while (1==1){ /*get new input values from the user until the break statement if the denominator is equal to 0 */
+        printf("Give numerator of first fractional number : ");
+        scanf("%d",&num4);
+        printf("\nGive denominator of first fractional number:  ");
+        scanf("%d",&den4);
+        printf("\nGive numerator of second fractional number : ");
+        scanf("%d",&num5);
+        printf("\nGive denominator of second fractional number:  ");
+        scanf("%d",&den5);
+        if (den4==0 || den5==0){
+            printf("\nIncorrect fraction number input, please try again\n\n");
+        }
+        else{
+            break;
+        }
+    }
     /*Fractional numbers taken from the user. */
-    scanf("%d",&den5);
     printf("First number: ");
     fraction_print(num4, den4);
     printf("\n");
