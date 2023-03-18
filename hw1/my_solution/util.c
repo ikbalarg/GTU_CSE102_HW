@@ -62,7 +62,7 @@ void multpily_function(int num1,int num2){
     else if (num2 >= 10) {  /* If the small number has 2 digits */
         ones = num2 % 10;/* The digit in the ones place*/
         tens = num2 / 10;/* The digit in the tens place*/
-        printf("\t   %3d\n\t   %3d\n\tx\n\t--------\n\t   %03d\n", num1, num2, num1 * ones); /* */
+        printf("\t    %3d\n\t    %3d\n\tx\n\t--------\n\t   %03d\n", num1, num2, num1 * ones); /* */
         printf("\t  %03d\n", num1 * tens); /*Multiplying the larger number by the number in the tens place of the smaller number */
         printf("\t+\n"); /* "+" symbol printed */
         printf("\t--------\n\t  %4d\n", result); /*line and result printed*/
