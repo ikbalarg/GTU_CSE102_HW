@@ -56,20 +56,62 @@ void multpily_function(int num1,int num2){
         ones=(num2%10);/* The digit in the ones place*/
         hundreds=(num2/100); /*The digit in the hundreds place*/
         tens=(num2-(hundreds*100))/10; /* EX:(325-300)/10 ---> The digit in the tens place*/
-        printf("\t%6d\n\t%6d\n    x\n    ----------\n\t  %03d\n\t %03d\n\t%03d\n   +\n    -----------\n\t%3d\n"
-               ,num1,num2,(ones*num1),(tens*num1),(hundreds*num1),result);
+        printf("\t%6d\n\t%6d\n    x\n    ----------\n\t  ",num1,num2);
+        if(ones*num1==0){ //if the result of multiplying the large number by the ones digit is 0.
+            /*100                 100
+            x 100               x 100
+            -----   ------->   ------
+                 0   (0--->000)   000
+                0                000
+            +100               +100
+            -----              -------
+             */
+            printf(" 000\n\t");
+        }
+        else{ //if the result of multiplying the large number by the ones digit is not 0.
+            printf("%4d\n\t",ones*num1);
+        }
+        if(tens*num1==0){//if the result of multiplying the large number by the tens digit is 0. same process as above.
+            printf("  000\n\t");
+        }
+        else{ //if the result of multiplying the large number by the tens digit is not 0.
+            printf(" %4d\n\t",tens*num1);
+        }
+        printf("%4d\n   +\n    -----------\n\t%6d\n",(hundreds*num1),result);
+        /*printf("\t%6d\n\t%6d\n    x\n    ----------\n\t  %4d\n\t %4d\n\t%4d\n   +\n    -----------\n\t%4d\n"
+                       ,num1,num2,(ones*num1),(tens*num1),(hundreds*num1),result);*/
     }
     else if (num2 >= 10) {  /* If the small number has 2 digits */
         ones = num2 % 10;/* The digit in the ones place*/
         tens = num2 / 10;/* The digit in the tens place*/
-        printf("\t    %3d\n\t    %3d\n\tx\n\t--------\n\t   %03d\n", num1, num2, num1 * ones); /* */
-        printf("\t  %03d\n", num1 * tens); /*Multiplying the larger number by the number in the tens place of the smaller number */
+        printf("\t    %3d\n\t    %3d\n\tx\n\t--------\n\t   ", num1, num2); /* */
+        if(ones*num1==0){//if the result of multiplying the large number by the ones digit is 0.
+                /*100                 100
+                x  10               x  10
+                -----   ------->   ------
+                     0   (0--->000)   000
+                  100                100
+                +                  +
+                -----              -------
+                 */
+            if (num1>99){ /*if the large number has 3 digits.Add three zero*/
+                printf(" 000\n");
+            }
+            else{/*if the large number has 2 digits.Add two zero */
+                printf("  00\n");
+            }
+        }
+        else{//if the result of multiplying the large number by the ones digit is not 0.
+            printf("%4d\n",num1*ones);
+        }
+        printf("\t  %4d\n", num1 * tens); //print  multiplying the large number by the tens.
         printf("\t+\n"); /* "+" symbol printed */
-        printf("\t--------\n\t  %4d\n", result); /*line and result printed*/
+        printf("\t--------\n\t  %5d\n", result); /*line and result printed*/
     } else {  /* If the small number has 1 digit*/
         printf("\t%5d\n\t%5d\n\tx\n\t-------\n\t%5d\n", num1, num2, num1 * num2);
     }
 }
+
 void between1to10(int num1){
     if (num1>10 || num1<1){ /* Invalid input zone defined */
         printf("Invalid input\n");
