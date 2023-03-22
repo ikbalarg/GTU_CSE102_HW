@@ -15,6 +15,7 @@ void leap_year(int year){
 void enhanced_calculator(){
     char operation,format;
     int mValue,nValue,firstOperand,secondOperand,result;
+    float resultDiv;
     printf("Enter the format of output (S or I): ");
     scanf(" %c", &format);
     //printf("%d",format=='S');
@@ -61,32 +62,41 @@ void enhanced_calculator(){
                             }
                         }
                         result = num1;
-                        printf("\n%d!= %d",firstOperand,result);
+                        //printf("\n%d!= %d",firstOperand,result);
                     }
                     else if(operation=='+'){
                         result = firstOperand + secondOperand;
-                        printf("%d+%d= %d",firstOperand,secondOperand,result);
+                        //printf("%d+%d= %d",firstOperand,secondOperand,result);
                     }
                     else if(operation=='-'){
                         result = firstOperand - secondOperand;
-                        printf("%d-%d= %d",firstOperand,secondOperand,result);
+                        //printf("%d-%d= %d",firstOperand,secondOperand,result);
                     }
                     else if(operation=='*'){
                         result = firstOperand * secondOperand;
-                        printf("%d*%d= %d",firstOperand,secondOperand,result);
+                        //printf("%d*%d= %d",firstOperand,secondOperand,result);
                     }
                     else if(operation=='/'){
-                        float result;
-                        result = firstOperand / secondOperand;
-                        printf("%d/%d= %f",firstOperand,secondOperand,result);
+                        resultDiv = (float) firstOperand / secondOperand;
+                        //printf("%f",resultDiv);
+                        //printf("%d/%d= %f",firstOperand,secondOperand,result);
                     }
                     else if(operation=='%'){
                         result = firstOperand % secondOperand;
-                        printf("%d%%%d= %d",firstOperand,secondOperand,result);
+                        //printf("%d%%%d= %d",firstOperand,secondOperand,result);
                     }
                     else if(operation=='^'){
                         result = pow(firstOperand,secondOperand);
-                        printf("%d^%d= %d",firstOperand,secondOperand,result);
+                        //printf("%d^%d= %d",firstOperand,secondOperand,result);
+                    }
+                    if(operation=='!'){
+                        printf("%d %c = %d\n",firstOperand,operation,result);
+                    }
+                    else if(operation=='/'){
+                        printf("%d %c %d = %f \n",firstOperand,operation,secondOperand,resultDiv);
+                    }
+                    else if(operation=='+'||operation=='-'||operation=='*'||operation=='^'||operation=='%'){
+                        printf("%d %c %d = %d\n",firstOperand,operation,secondOperand,result);
                     }
                 }
                 else{
