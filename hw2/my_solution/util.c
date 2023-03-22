@@ -13,6 +13,91 @@ void leap_year(int year){
     }
 }
 void enhanced_calculator(){
+    char operation,format;
+    int mValue,nValue,firstOperand,secondOperand,result;
+    printf("Enter the format of output (S or I): ");
+    scanf(" %c", &format);
+    //printf("%d",format=='S');
+    if(format!='S' && format!='I'){
+        printf("Invalid input\n");
+    }
+    else{
+        if(format == 'I'){
+            printf("\nEnter the operation (+, -, /, *, !, ^, %%): ");
+            scanf(" %c",&operation);
+            if(operation!='+'&&operation!='-'&&operation!='/'&&operation!='*'&&operation!='!'&&operation!='^'&&operation!='%'){
+                printf("\nInvalid input\n");
+            }
+            else{
+                int checkOperands=1 ;//checks the validity of the operands.
+                if(operation=='!'){
+                    printf("Enter the first operand: ");
+                    if (scanf("%d", &firstOperand)!=1){
+                        printf("Invalid input\n");
+                        checkOperands=0;
+                    }
+                        
+                }
+                else{
+                    printf("Enter the first operand: ");
+                    if (scanf("%d", &firstOperand)!=1){
+                        checkOperands=0;
+                    }
+                    printf("\nEnter the second operand: ");
+                    if (scanf("%d", &secondOperand)!=1){
+                        checkOperands=0;
+                    }
+                }
+                if(checkOperands==1){
+                    if(operation=='!'){
+                        // Factorial
+                        int num1 = 1, memory = firstOperand;
+                        if (memory == 0) {
+                            num1 = 1;
+                        } else {
+                            while (memory > 0) {
+                                num1 = num1 * memory;
+                                memory = memory - 1;
+                            }
+                        }
+                        result = num1;
+                        printf("\n%d!= %d",firstOperand,result);
+                    }
+                    else if(operation=='+'){
+                        result = firstOperand + secondOperand;
+                        printf("%d+%d= %d",firstOperand,secondOperand,result);
+                    }
+                    else if(operation=='-'){
+                        result = firstOperand - secondOperand;
+                        printf("%d-%d= %d",firstOperand,secondOperand,result);
+                    }
+                    else if(operation=='*'){
+                        result = firstOperand * secondOperand;
+                        printf("%d*%d= %d",firstOperand,secondOperand,result);
+                    }
+                    else if(operation=='/'){
+                        float result;
+                        result = firstOperand / secondOperand;
+                        printf("%d/%d= %f",firstOperand,secondOperand,result);
+                    }
+                    else if(operation=='%'){
+                        result = firstOperand % secondOperand;
+                        printf("%d%%%d= %d",firstOperand,secondOperand,result);
+                    }
+                    else if(operation=='^'){
+                        result = pow(firstOperand,secondOperand);
+                        printf("%d^%d= %d",firstOperand,secondOperand,result);
+                    }
+                }
+                else{
+                    printf("Invalid input\n");
+                }
+               
+            }
+        }
+    }
+}
+void enhanced_calculator2(){
     char operation, format;
     int mV, nV, firstOperand, secondOperand, sonuc;
     printf("Enter the format of output (S or I): ");
