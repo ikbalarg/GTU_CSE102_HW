@@ -21,33 +21,26 @@ void grade_calculator(){
     int ex1,ex2,ex3,hw1,hw2;/*exams->ex(X) ,homeworks-> hw(X)  */
     float final_grade;
     printf("Enter 3 exam grades of student : ");
-    while(1==1){ /* loop block that will continue until the value is entered in the valid range*/
-        scanf("%d %d %d",&ex1,&ex2,&ex3);
-        if(ex1<0 || ex1>100 || ex2<0 || ex2>100 || ex3<0 || ex3>100){
-            //checking the range of numbers
-            printf("Invalid input.You can enter a value between 0 and 100. Please try again\n");
-        }else{
-            break;
-        }
-    }
-    while (1==1){
-        /* loop block that will continue until the value is entered in the valid range*/
+    scanf(" %d %d %d",&ex1,&ex2,&ex3);
+    if(ex1<0 || ex1>100 || ex2<0 || ex2>100 || ex3<0 || ex3>100){
+        //checking the range of numbers
+        printf("Invalid input.You can enter a value between 0 and 100. Please try again\n");
+    }else{
         printf("\nEnter 2 assignment grades of student : ");
-        scanf("%d %d",&hw1,&hw2);
+        scanf(" %d %d",&hw1,&hw2);
         printf("\n");
         if(hw1<0 || hw1>100 || hw2<0 || hw2>100){
-            //checking the range of numbers
+        //checking the range of numbers
             printf("Invalid input.You can enter a value between 0 and 100. Please try again\n");
         }else{
-            break;
+            final_grade=(ex1+ex2+ex3)/3*0.6+(hw1+hw2)/2*0.4; /*final grade calculated */
+            if(final_grade<60){
+                printf("Final grade: %.1f Failed!\n",final_grade);
+            }
+            else{
+                printf("Final grade: %.1f Passed!\n",final_grade);
+            }
         }
-    }
-    final_grade=(ex1+ex2+ex3)/3*0.6+(hw1+hw2)/2*0.4; /*final grade calculated */
-    if(final_grade<60){
-        printf("Final grade: %.1f Failed!\n",final_grade);
-    }
-    else{
-        printf("Final grade: %.1f Passed!\n",final_grade);
     }
 }
 //Part2
@@ -170,6 +163,7 @@ void calculator(int format,char operation,int firstOperand,int secondOperand,dou
             int num1 = 1, memory = firstOperand; //Factorial operation
             if (memory==0){
                 num1=1;
+                result=1;
             }else{
                 while (memory > 0) {
                     num1 = num1 * memory;
@@ -193,7 +187,7 @@ void calculator(int format,char operation,int firstOperand,int secondOperand,dou
         if(operation=='!'){
             printf("%d %c = %d\n",firstOperand,operation,result);
         }else if(operation=='/'){
-            printf("%d %c %d = %f \n",firstOperand,operation,secondOperand,resultDiv);   //print blocks
+            printf("%d %c %d = %.2f \n",firstOperand,operation,secondOperand,resultDiv);   //print blocks
         }else if(operation=='+'||operation=='-'||operation=='*'||operation=='^'||operation=='%'){
             printf("%d %c %d = %d\n",firstOperand,operation,secondOperand,result);
         }
@@ -201,7 +195,7 @@ void calculator(int format,char operation,int firstOperand,int secondOperand,dou
     }else{ //if format is scientific format
         double result; //result variable created.
         if(operation=='!'){
-            int num1 = 1, memory = (int)fOperand;
+            int num1 = 1, memory = (int)fOperand; ////Factorial operation
             if (memory==0){
                 num1=1;
             }else{
@@ -212,36 +206,45 @@ void calculator(int format,char operation,int firstOperand,int secondOperand,dou
                 result = num1;
             }
         }else if(operation=='+'){
-            result = fOperand + sOperand;
+            result = fOperand + sOperand; //addition
         }else if(operation=='-'){
-            result = fOperand - sOperand;
+            result = fOperand - sOperand; //subtraction
         }else if(operation=='*'){
-            result = fOperand * sOperand;
+            result = fOperand * sOperand;//multiplication
         }else if(operation=='/'){
-            result = fOperand / sOperand;
+            result = fOperand / sOperand; //division
         }else if(operation=='%'){
-            result = (int)fOperand % (int)sOperand;
+            result = (int)fOperand % (int)sOperand; //mode operation
         } else if(operation=='^'){
-            result = pow(fOperand,sOperand);
+            result = pow(fOperand,sOperand); //power operation
         }
-        int number_of_digit;
-
-        if(operation=='!'){
-            printf("%lf %c = %lf\n",fOperand,operation,result);
-        }else if(operation=='/'){
-            printf("%lf %c %lf = %lf \n",fOperand,operation,sOperand,result);
-        }else if(operation=='+'||operation=='-'||operation=='*'||operation=='^'||operation=='%'){
-            if(nValue==1){
-                printf("%lf %c %lf = ",fOperand,operation,sOperand);
-                printf("%.*E\n",mValue-nValue,result);
+        if(operation=='+'||operation=='-'||operation=='*'||operation=='^'||operation=='%'||operation=='/'||operation=='!'){
+            if (operation=='!'){ /*Since there is no second oparand in the factorial, it was handled in a separate block */
+                if(nValue==1){  // n=1 m=7, EX: 7.35--> 7 .350000
+                    printf("%lf %c = ",fOperand,operation);
+                    printf("%.*E\n",mValue-nValue,result);
+                }else{
+                    printf("%lf %c = ",fOperand,operation);
+                    int i;
+                    for(i=0;i<mValue-nValue-1;i++){  //Zero is added at the beginning to provide the value of m
+                        printf("0");
+                    }
+                    printf("%0*.*e\n",mValue,nValue,result);
+                    }
             }else{
-                printf("%lf %c %lf = ",fOperand,operation,sOperand);
-                int i;
-                for(i=0;i<mValue-nValue-1;i++){
-                    printf("0");
-                }
-                printf("%0*.*e\n",mValue,nValue,result);
-                }
+                if(nValue==1){
+                    printf("%lf %c %lf = ",fOperand,operation,sOperand);
+                    printf("%.*E\n",mValue-nValue,result);
+                }else{
+                    printf("%lf %c %lf = ",fOperand,operation,sOperand);
+                    int i;
+                    for(i=0;i<mValue-nValue-1;i++){ //Zero is added at the beginning to provide the value of m
+                        printf("0");
+                    }
+                    printf("%0*.*e\n",mValue,nValue,result);
+                    }
+            }
+            
         }
     }
 }

@@ -1,9 +1,9 @@
 all: clean compile run
 
-compile: main.c util.c util.h
+compile: main.c util.c util.h -lm
 	@echo "-------------------------------------------"
 	@echo "Compiling..."
-	@gcc -o test main.c util.c
+	@gcc -o test main.c util.c -lm
 
 run:
 	@echo "-------------------------------------------"
