@@ -1,62 +1,27 @@
 #include <stdio.h>
-void printMenu();
-int choice(int order,int serving); 
-float pullPriceFromFile(int order);
-void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,int dish7,int dish8,
-int dish9,int dish10,char studentChec);
-void printFoodName(int order );
-float printDishPrice(int order, int lineNumber);
+/*Tarih eklenecek,sipariş sayısı ile ilgili bir fonksiyon yazılacak,yazılan her şey bir txt dosyasına eklenecek*/
 void part1();
+void printMenu();
+//void priceCalculate(int order1,int serving1,int order2,int serving2,int order3,int serving3,char studentCheck);
+int choice(int order,int serving);
+float pullPriceFromFile(int order);
+void drawReceipt(int order1,int serving1,int order2,int serving2,int order3,int serving3,char studentCheck);
+void printFoodName(int order);
 int main() {
-    part1();/*dosyaya yazma fonksiyonu ve tarih eklenecek */
+    part1();
 }
 void part1(){
-    int dish1=0,dish2=0,dish3=0,dish4=0,dish5=0,dish6=0,dish7=0,dish8=0,dish9=0,dish10=0;/*
-    this variables holds servings*/
+    int order1,order2,order3,j;
+    int serving1,serving2,serving3;
     char studentCheck;
-    int order,serving;
-    while(1){
-        order=choice(1,0);
-        serving=choice(0,1);
-        if(serving==0||order==0){
-            break;
-        }
-        switch (order)
-        {
-        case 1:
-            dish1=dish1+serving;
-            break;
-        case 2:
-            dish2=dish2+serving;
-            break;
-        case 3:
-            dish3=dish3+serving;
-            break;
-        case 4:
-            dish4=dish4+serving;
-            break;
-        case 5:
-            dish5=dish5+serving;
-            break;
-        case 6:
-            dish6=dish6+serving;
-            break;
-        case 7:
-            dish7=dish7+serving;
-            break; 
-        case 8:
-            dish8=dish8+serving;
-            break;
-        case 9:
-            dish9=dish9+serving;
-            break;
-        case 10:
-            dish10=dish10+serving;
-            break;           
-        default:
-            break;
-        }
-    }
+    printMenu();
+    printf("\n");
+    order1=choice(1,0);
+    serving1=choice(0,1);
+    order2=choice(1,0);
+    serving2=choice(0,1);
+    order3=choice(1,0);
+    serving3=choice(0,1);
     while(1){ //buffer hatası
         printf("Are you student? (Y/N): \n");
         studentCheck=getchar();
@@ -74,62 +39,68 @@ void part1(){
             }
         }
     }
-    draawReceipt_1(dish1,dish2,dish3,dish4,dish5,dish6,dish7,dish8,dish9,dish10,studentCheck);
+    /*calculate prices*/
+    //printf("%d %d %d %c",order1,order2,order3,studentCheck);
+    drawReceipt(order1,serving1,order2,serving2,order3,serving3,studentCheck);
+
 }
-void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,int dish7,int dish8,
-int dish9,int dish10,char studentCheck){
-    float totalNoVAT=0,totalWithVAT,Discount,eachOrderTotal;
+void drawReceipt(int order1,int serving1,int order2,int serving2,int order3,int serving3,char studentCheck){
+    float order1total,order2total,order3total,totalNoVAT,totalWithVAT;
+    order1total=serving1*pullPriceFromFile(order1);
+    float deneme,Discount;
+    deneme=pullPriceFromFile(order1);
+    printf("Önemli %f\n",deneme);
+    order2total=serving2*pullPriceFromFile(order2);
+    order3total=serving3*pullPriceFromFile(order3);
+    totalNoVAT=order1total+order2total+order3total;
+    if(studentCheck=='Y'){
+        Discount=(totalNoVAT*12.5)/100;
+    }else{
+        if(totalWithVAT>=150){
+            Discount=(totalNoVAT*18)/100;
+        }
+    }
+    if(totalNoVAT>150&&studentCheck=='N'){
+        totalNoVAT=totalNoVAT-totalNoVAT*1/10;
+    }else if(studentCheck=='Y'){
+        totalWithVAT=totalNoVAT-(totalNoVAT*125)/1000;
+    }
     printf("\t200102002071\t08.04.2023/00.00\n");
     printf("\t------------------------------------\n");
     printf("\tProduct\t\t      Price(TL)\n");
     printf("\t------------------------------------\n");
-    if(dish1>0){
-        eachOrderTotal=printDishPrice(dish1, 1);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
+    if (serving1==1){
+        printf("\t   ");
+        printFoodName(order1);
+        printf("\t\t%.2f\n",order1total);
+    }else{
+        printf("\t%d *",serving1);
+        printFoodName(order1);
+        printf("\t\t%.2f\n",order1total);
     }
-    if(dish2>0){
-        eachOrderTotal=printDishPrice(dish2, 2);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
+    if (serving2==1){
+        printf("\t   ");
+        printFoodName(order2);
+        printf("\t\t%.2f\n",order2total);
+    }else{
+        printf("\t%d *",serving2);
+        printFoodName(order2);
+        printf("\t\t%.2f\n",order2total);
     }
-    if(dish3>0){
-        eachOrderTotal=printDishPrice(dish3, 3);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish4>0){
-        eachOrderTotal= printDishPrice(dish4, 4);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish5>0){
-        eachOrderTotal= printDishPrice(dish5, 5);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish6>0){
-       eachOrderTotal= printDishPrice(dish6, 6);
-       totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish7>0){
-        eachOrderTotal= printDishPrice(dish7, 7);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish8>0){
-        eachOrderTotal= printDishPrice(dish8, 8);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish9>0){
-        eachOrderTotal=printDishPrice(dish9, 9);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
-    }
-    if(dish10>0){
-        eachOrderTotal= printDishPrice(dish10, 10);
-        totalNoVAT=totalNoVAT+eachOrderTotal;
+    if (serving3==1){
+        printf("\t   ");
+        printFoodName(order3);
+        printf("\t\t%.2f\n",order3total);
+    }else{
+        printf("\t%d *",serving3);
+        printFoodName(order3);
+        printf("\t\t%.2f\n",order3total);
     }
     printf("\tTotal:   \t\t%.2f\n",totalNoVAT);
     if(studentCheck=='Y'){
-        Discount=(totalNoVAT*12.5)/100;
         printf("\tStudent discount:   \t%.2f\n",Discount);
     }else{
         if(totalNoVAT>=150){
-            Discount=(totalNoVAT*10)/100;
             printf("\tDiscount:   \t\t%.2f\n",Discount);
         }else{
             Discount=0;
@@ -139,25 +110,6 @@ int dish9,int dish10,char studentCheck){
     printf("\tPrice:   \t\t%.2f\n",totalNoVAT-Discount);
     totalWithVAT=(totalNoVAT-Discount)+((totalNoVAT-Discount)*18)/100;
     printf("\tPrice+VAT:\t\t%.2f\n",totalWithVAT);
-
-}   
-float printDishPrice(int dish, int lineNumber){
-    float orderTotal;
-    if(dish>0){
-        orderTotal=0;
-        orderTotal=dish*pullPriceFromFile(lineNumber);
-        //totalNoVAT=totalNoVAT+orderTotal;
-        if (dish==1){
-            printf("\t   ");
-            printFoodName(lineNumber);
-            printf("\t\t%.2f\n",orderTotal);
-        }else{
-            printf("\t%d *",dish);
-            printFoodName(lineNumber);
-            printf("\t\t%.2f\n",orderTotal);
-        }
-    }
-    return orderTotal;
 }
 void printFoodName(int order){
     FILE *dosya;
@@ -216,7 +168,7 @@ int choice(int order,int serving){
     if(order==1 && serving==0){
         while(1){
         printf("Please choose a product (1-10): ");
-        if(scanf("%d",&choice)!=1||choice<0||choice>10){
+        if(scanf("%d",&choice)!=1||choice<1||choice>10){
             printf("Invalid choice.Please select again \n");
             while ((j = getchar()) != '\n' && j != EOF); /*clean buffer */
         }else{
