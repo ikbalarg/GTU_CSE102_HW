@@ -1,0 +1,10 @@
+1. Hamburger 110.0
+2. Tavuk Burger 120.0
+3. Quesadilla 130.0
+4. Pizza 140.0
+5. Taco 150.0
+6. Lazanya 160.0
+7. Tiramisu 170.0
+8. Cheesecake 180.0
+9. Nata 190.0
+10. Dondurma 200.0
