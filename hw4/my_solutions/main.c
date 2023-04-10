@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 void printMenu();
 int choice(int order,int serving); 
 float pullPriceFromFile(int order);
@@ -6,15 +8,21 @@ void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,
 int dish9,int dish10,char studentChec);
 void printFoodName(int order );
 float printDishPrice(int order, int lineNumber);
+int part2();
 void part1();
 int main() {
     part1();/*dosyaya yazma fonksiyonu ve tarih eklenecek */
+    int control=1;
+    while(control==1){
+        control=part2();
+    }
 }
 void part1(){
     int dish1=0,dish2=0,dish3=0,dish4=0,dish5=0,dish6=0,dish7=0,dish8=0,dish9=0,dish10=0;/*
     this variables holds servings*/
     char studentCheck;
     int order,serving;
+    printMenu();
     while(1){
         order=choice(1,0);
         serving=choice(0,1);
@@ -270,4 +278,85 @@ void printMenu(){
     }
     fclose(dosya);
 
+}
+int part2(){
+    char again;
+    int choice,choicePC,j;
+    int control=1;
+try:
+    printf("Please make a choice!\n1: Stone, 2: Paper, 3: Scissors\n");
+    if(scanf(" %d",&choice)!=1){
+        printf("Invalid input.Please try again ...\n");
+        while ((j = getchar()) != '\n' && j != EOF); /*buffer'ı temizle */
+        goto try;
+    }else{
+        if(choice<4&&choice>0){
+            //srand(time(NULL));
+            choicePC=(random() % 3) + 1;
+            switch (choice)
+            {
+            case 1:
+                if(choicePC==1){
+                    printf("You choose Stone. I choose Stone.It's a tie!\n");
+                }
+                else if(choicePC==3){
+                    printf("You choose Stone. I choose Scissors.You win!\n");
+                }
+                else if(choicePC==2){
+                    printf("You choose Stone. I choose Paper.I won!\n");
+                }
+                break;
+            case 2:
+                if(choicePC==1){
+                    printf("You choose Paper. I choose Stone.You win!\n");
+                }
+                else if(choicePC==3){
+                    printf("You choose Paper. I choose Scissors.I win!\n");
+                }
+                else if(choicePC==2){
+                    printf("You choose Paper. I choose Paper.It's a tie!\n");
+                }
+                break;
+            case 3:
+                if(choicePC==1){
+                    printf("You choose Scissors. I choose Stone.I win!\n");
+                }
+                else if(choicePC==3){
+                    printf("You choose Scissors. I choose Scissors.It's a tie!\n");
+                }
+                else if(choicePC==2){
+                    printf("You choose Scissors. I choose Paper.You win!\n");
+                }
+                break;
+                
+            }
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+            while(1){
+                printf("Do you want to play again?(Y/N) \n");
+                again=getchar();
+                if(again=='\n'){
+                    printf("Invalid input. Please try again ...\n");
+                }else if (getchar() != '\n') {
+                    while (getchar() != '\n');
+                    printf("Invalid input. Please try again ...\n");
+                    continue;
+                }else{
+                    if(again=='Y'){
+                        return 1;
+                    }else if(again=='N'){
+                        return 0;
+                    }else{
+                        printf("Invalid input please try again ...\n");
+                        while ((c = getchar()) != '\n' && c != EOF);
+                    }
+                }
+            }
+
+        }else{
+            printf("Invalid input.Please try again ...\n");
+            goto try;
+        }
+    }
+    
 }
