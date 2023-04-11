@@ -8,7 +8,6 @@ void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,
 int dish9,int dish10,char studentChec);
 void printFoodName(int order,FILE *writeFile);
 float printDishPrice(int order, int lineNumber,FILE *writeFile);
-void writeToFile();
 int part2();
 void part1();
 int main() {
@@ -19,6 +18,8 @@ int main() {
     }
 }
 void part1(){
+    printMenu();
+    printf("\n");
     int dish1=0,dish2=0,dish3=0,dish4=0,dish5=0,dish6=0,dish7=0,dish8=0,dish9=0,dish10=0;/*
     this variables holds servings*/
     char studentCheck;
@@ -142,6 +143,12 @@ int dish9,int dish10,char studentCheck){
         Discount=(totalNoVAT*12.5)/100;
         printf("\tStudent discount:   \t%.2f\n",Discount);
         fprintf(writeFile,"\tStudent discount:   \t%.2f\n",Discount);
+        if (totalNoVAT>=150){
+            printf("\tDiscount:   \t\t%.2f\n",(totalNoVAT*10/100));
+            fprintf(writeFile,"\tDiscount:   \t\t%.2f\n",(totalNoVAT*10/100));
+            Discount=Discount+(totalNoVAT*10/100);
+        }
+        
 
     }else{
         if(totalNoVAT>=150){
@@ -191,7 +198,7 @@ void printFoodName(int order,FILE *writeFile){
         printf("Dosya açılamadı.");
         //return 0;
     }
-    char c;
+    int c;
     int counterLineCheck= 0,readCheck=0;
     while((c = fgetc(dosya)) != EOF) {
         if(c<='z' &&c>='a' || c<='Z' &&c>='A'||c==' '||c=='\n'){
@@ -223,7 +230,7 @@ float pullPriceFromFile(int order){
     }
     int line=order;
     float price;
-    char c;
+    int c;
     int counterLineCheck= 1,lineSpace=0,readCheck=0;
     while((c = fgetc(file)) != EOF) {
         if(c=='\n'){
@@ -273,7 +280,7 @@ void printMenu(){
         printf("Dosya açılamadı.");
         //return 0;
     }
-    char c;
+    int c;
     int counterLineCheck= 0,lineSpace=0,readCheck=0;
     printf("Yemek Listesi:\n");
     while((c = fgetc(dosya)) != EOF) {
@@ -285,7 +292,6 @@ void printMenu(){
             if(c=='\n'){
                 readCheck=0;
                 //printf("%d. ",counterLineCheck+1);
-                printf("\n");
                 printf("\n");
                 //counterLineCheck++;
             }else{
@@ -366,7 +372,6 @@ try:
                         return 0;
                     }else{
                         printf("Invalid input please try again ...\n");
-                        while ((c = getchar()) != '\n' && c != EOF);
                     }
                 }
             }
