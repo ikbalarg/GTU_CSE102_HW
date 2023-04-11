@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-void printMenu();
-int choice(int order,int serving); 
+void printMenu();/*This function prints menu without price information*/
+int choice(int order,int serving); /*This function takes two parameter. we choose food from the menu if order=1 and serving=0. We we get information about the number of services, if serving=1 and order=0  */
 float pullPriceFromFile(int order);
 void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,int dish7,int dish8,
 int dish9,int dish10,char studentChec);
-void printFoodName(int order );
-float printDishPrice(int order, int lineNumber);
+void printFoodName(int order,FILE *writeFile);
+float printDishPrice(int order, int lineNumber,FILE *writeFile);
+void writeToFile();
 int part2();
 void part1();
 int main() {
-    part1();/*dosyaya yazma fonksiyonu ve tarih eklenecek */
+    part1();
     int control=1;
     while(control==1){
         control=part2();
@@ -22,7 +23,6 @@ void part1(){
     this variables holds servings*/
     char studentCheck;
     int order,serving;
-    printMenu();
     while(1){
         order=choice(1,0);
         serving=choice(0,1);
@@ -51,7 +51,7 @@ void part1(){
             break;
         case 7:
             dish7=dish7+serving;
-            break; 
+            break;
         case 8:
             dish8=dish8+serving;
             break;
@@ -60,7 +60,7 @@ void part1(){
             break;
         case 10:
             dish10=dish10+serving;
-            break;           
+            break;
         default:
             break;
         }
@@ -86,70 +86,83 @@ void part1(){
 }
 void draawReceipt_1(int dish1,int dish2,int dish3,int dish4,int dish5,int dish6,int dish7,int dish8,
 int dish9,int dish10,char studentCheck){
+    FILE *writeFile = fopen("example.txt","w+");
+    char timeString[80];
+    time_t now = time(NULL);
+    strftime(timeString, 80, "%d.%m.%Y/%H:%M", localtime(&now));
     float totalNoVAT=0,totalWithVAT,Discount,eachOrderTotal;
-    printf("\t200102002071\t08.04.2023/00.00\n");
+    printf("\t200102002071\t");
+    printf("%s\n", timeString);
     printf("\t------------------------------------\n");
     printf("\tProduct\t\t      Price(TL)\n");
     printf("\t------------------------------------\n");
     if(dish1>0){
-        eachOrderTotal=printDishPrice(dish1, 1);
+        eachOrderTotal=printDishPrice(dish1, 1,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish2>0){
-        eachOrderTotal=printDishPrice(dish2, 2);
+        eachOrderTotal=printDishPrice(dish2, 2,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish3>0){
-        eachOrderTotal=printDishPrice(dish3, 3);
+        eachOrderTotal=printDishPrice(dish3, 3,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish4>0){
-        eachOrderTotal= printDishPrice(dish4, 4);
+        eachOrderTotal= printDishPrice(dish4, 4,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish5>0){
-        eachOrderTotal= printDishPrice(dish5, 5);
+        eachOrderTotal= printDishPrice(dish5, 5,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish6>0){
-       eachOrderTotal= printDishPrice(dish6, 6);
+       eachOrderTotal= printDishPrice(dish6, 6,writeFile);
        totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish7>0){
-        eachOrderTotal= printDishPrice(dish7, 7);
+        eachOrderTotal= printDishPrice(dish7, 7,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish8>0){
-        eachOrderTotal= printDishPrice(dish8, 8);
+        eachOrderTotal= printDishPrice(dish8, 8,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish9>0){
-        eachOrderTotal=printDishPrice(dish9, 9);
+        eachOrderTotal=printDishPrice(dish9, 9,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     if(dish10>0){
-        eachOrderTotal= printDishPrice(dish10, 10);
+        eachOrderTotal= printDishPrice(dish10, 10,writeFile);
         totalNoVAT=totalNoVAT+eachOrderTotal;
     }
     printf("\tTotal:   \t\t%.2f\n",totalNoVAT);
+    fprintf(writeFile,"\tTotal:   \t\t%.2f\n",totalNoVAT);
     if(studentCheck=='Y'){
         Discount=(totalNoVAT*12.5)/100;
         printf("\tStudent discount:   \t%.2f\n",Discount);
+        fprintf(writeFile,"\tStudent discount:   \t%.2f\n",Discount);
+
     }else{
         if(totalNoVAT>=150){
             Discount=(totalNoVAT*10)/100;
             printf("\tDiscount:   \t\t%.2f\n",Discount);
+            fprintf(writeFile,"\tDiscount:   \t\t%.2f\n",Discount);
+
         }else{
             Discount=0;
         }
     }
     printf("\t------------------------------------\n");
     printf("\tPrice:   \t\t%.2f\n",totalNoVAT-Discount);
+    fprintf(writeFile,"\tPrice:   \t\t%.2f\n",totalNoVAT-Discount);
     totalWithVAT=(totalNoVAT-Discount)+((totalNoVAT-Discount)*18)/100;
     printf("\tPrice+VAT:\t\t%.2f\n",totalWithVAT);
+    fprintf(writeFile,"\tPrice+VAT:\t\t%.2f\n",totalWithVAT);
+    fclose(writeFile);
 
-}   
-float printDishPrice(int dish, int lineNumber){
+}
+float printDishPrice(int dish, int lineNumber,FILE *writeFile){
     float orderTotal;
     if(dish>0){
         orderTotal=0;
@@ -157,17 +170,21 @@ float printDishPrice(int dish, int lineNumber){
         //totalNoVAT=totalNoVAT+orderTotal;
         if (dish==1){
             printf("\t   ");
-            printFoodName(lineNumber);
+            fprintf(writeFile,"\t   ");
+            printFoodName(lineNumber,writeFile);
             printf("\t\t%.2f\n",orderTotal);
+            fprintf(writeFile,"\t\t%.2f\n",orderTotal);
         }else{
             printf("\t%d *",dish);
-            printFoodName(lineNumber);
+            fprintf(writeFile,"\t%d *",dish);
+            printFoodName(lineNumber,writeFile);
             printf("\t\t%.2f\n",orderTotal);
+            fprintf(writeFile,"\t\t%.2f\n",orderTotal);
         }
     }
     return orderTotal;
 }
-void printFoodName(int order){
+void printFoodName(int order,FILE *writeFile){
     FILE *dosya;
     dosya = fopen("dosya.txt","r");
     if(dosya == NULL) {
@@ -186,6 +203,7 @@ void printFoodName(int order){
             }else{
                 if(order==counterLineCheck){
                     printf("%c",c);
+                    fprintf(writeFile,"%c",c);
                     readCheck=1;
                 }
                 
