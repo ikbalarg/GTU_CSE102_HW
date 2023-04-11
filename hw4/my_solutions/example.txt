@@ -1,7 +1,0 @@
-	2 * Quesadilla 		260.00
-	    Taco 		150.00
-	2 * Tiramisu 		340.00
-	Total:   		750.00
-	Student discount:   	93.75
-	Price:   		656.25
-	Price+VAT:		774.38

@@ -1,0 +1,10 @@
+1. Hamburger 110.0
+2. Kokorec 100.0
+3. Et Doner 65.0
+4. Pizza 140.0
+5. Taco 80.0
+6. Quesadilla 130.0
+7. Tiramisu 69.90
+8. Cheesecake 80.0
+9. Kola 20.0
+10. Ayran 8.0
