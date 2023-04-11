@@ -98,7 +98,7 @@ int dish9,int dish10,char studentCheck){
     printf("\t------------------------------------\n");
     printf("\tProduct\t\t      Price(TL)\n");
     printf("\t------------------------------------\n");
-    if(dish1>0){:/* Order item 1 on the menu if the order quantity is greater than 0:*/
+    if(dish1>0){/* Order item 1 on the menu if the order quantity is greater than 0:*/
         eachOrderTotal=printDishPrice(dish1, 1,writeFile);/* call the function that multiplies the price and portion of a single product*/
         totalNoVAT=totalNoVAT+eachOrderTotal;/* the total price of a single product is added to the total tax-free quantity*/
     }
