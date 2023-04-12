@@ -302,23 +302,23 @@ int printMenu(){/*This function prints menu without price information,returns 0 
     fclose(dosya);
     return 1; /* prints the menu and returns 1 if the file is found*/
 }
-int part2(){
+int part2(){ /* Part 2*/
     char again;
-    int choice,choicePC,j;
+    int choice,choicePC,j; /* choice = user's choice ,choicePC=random selection of the computer*/
     int control=1;
 try:
     printf("Please make a choice!\n1: Stone, 2: Paper, 3: Scissors\n");
-    if(scanf(" %d",&choice)!=1){
+    if(scanf(" %d",&choice)!=1){ /* if the choice is invalid*/
         printf("Invalid input.Please try again ...\n");
-        while ((j = getchar()) != '\n' && j != EOF); /*buffer'ı temizle */
-        goto try;
+        while ((j = getchar()) != '\n' && j != EOF); /*clean buffer */
+        goto try;/*back to try */
     }else{
-        if(choice<4&&choice>0){
+        if(choice<4&&choice>0){/* if the choice is in the right range*/
             //srand(time(NULL));
-            choicePC=(random() % 3) + 1;
+            choicePC=(random() % 3) + 1; /* the computer gets random values*/
             switch (choice)
             {
-            case 1:
+            case 1://if the user's choice is stone
                 if(choicePC==1){
                     printf("You choose Stone. I choose Stone.It's a tie!\n");
                 }
@@ -329,7 +329,7 @@ try:
                     printf("You choose Stone. I choose Paper.I won!\n");
                 }
                 break;
-            case 2:
+            case 2://if the user's choice is paper
                 if(choicePC==1){
                     printf("You choose Paper. I choose Stone.You win!\n");
                 }
@@ -340,7 +340,7 @@ try:
                     printf("You choose Paper. I choose Paper.It's a tie!\n");
                 }
                 break;
-            case 3:
+            case 3://if the user's choice is scissors
                 if(choicePC==1){
                     printf("You choose Scissors. I choose Stone.I win!\n");
                 }
@@ -354,19 +354,19 @@ try:
                 
             }
             int c;
-            while ((c = getchar()) != '\n' && c != EOF);
-            while(1){
+            while ((c = getchar()) != '\n' && c != EOF);//clean buffer.
+            while(1){/* The user is prompted whether to play again or not. If there is an incorrect input, the loop continues until it is correct.*/
                 printf("Do you want to play again?(Y/N) \n");
                 again=getchar();
-                if(again=='\n'){
+                if(again=='\n'){/* if input is enter*/
                     printf("Invalid input. Please try again ...\n");
-                }else if (getchar() != '\n') {
+                }else if (getchar() != '\n') {//If the input type is character, the second character of the input is read. If the second character is not '\n', an error is given.
                     while (getchar() != '\n');
                     printf("Invalid input. Please try again ...\n");
                     continue;
-                }else{
+                }else{//if the input is correct
                     if(again=='Y'){
-                        return 1;
+                        return 1; //If Y, 1 is returned. This function is called as 1 is returned to the main function.
                     }else if(again=='N'){
                         return 0;
                     }else{

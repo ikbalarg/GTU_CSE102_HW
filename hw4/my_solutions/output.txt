@@ -1,6 +1,0 @@
-	2 * Pizza 		280.00
-	3 * Taco 		240.00
-	Total:   		520.00
-	Discount:   		52.00
-	Price:   		468.00
-	Price+VAT:		552.24

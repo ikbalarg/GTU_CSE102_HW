@@ -1,5 +1,5 @@
 1. Hamburger 110.0
-2. Kokorec 100.0
+2. Kokorec 70.0
 3. Et Doner 65.0
 4. Pizza 140.0
 5. Taco 80.0
