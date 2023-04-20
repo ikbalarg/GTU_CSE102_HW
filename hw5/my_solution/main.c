@@ -1,15 +1,31 @@
 #include <stdio.h>
 #include<ctype.h>
-
+#include <math.h>
 void part1();
+void part2();
 void part3();
 void draw_board(char arr[][3]);
 void game(char arr[][3]);
 int checkGame(char arr[][3]);
 void move(int *moveArr,int orderOfMoves,int *checkValid);
 void counter(char filename[], char *alphabet, int *letterCounter);
+typedef enum {
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    ORANGE
+} Color;
+double colorVectors[5][3] = {
+    {1.0, 0.0, 0.0}, // RED
+    {0.0, 1.0, 0.0}, // GREEN
+    {0.0, 0.0, 1.0}, // BLUE
+    {0.5, 0.5, 0.0}, // YELLOW
+    {0.5, 0.4, 0.2}  // ORANGE
+};
 int main() {
     part1();
+    part2();
     part3();
 }
 void part1() {
@@ -44,6 +60,117 @@ void counter(char filename[], char *alphabet, int *letterCounter) {
         }
     }
     fclose(file);
+}
+void part2(){
+    char color1,color2;
+    Color colorType1,colorType2;
+    while(1){
+        printf("Enter Color 1 (r,g,b,y,o):");
+        if(scanf("%c",&color1)!=1||(color1!='r'&&color1!='g'&&color1!='b'&&color1!='y'&&color1!='o')){
+            printf("Invalid input please try again...\n");
+            printf("girdi");
+            while(getchar() != '\n'); // tampon bölgesini temizle
+            continue;
+        }
+        while(getchar() != '\n'); // tampon bölgesini temizle
+        printf("Enter Color 2 (r,g,b,y,o):");
+        if(scanf("%c",&color2)!=1||(color2!='r'&&color2!='g'&&color2!='b'&&color2!='y'&&color2!='o')){
+            printf("Invalid input please try again...\n");
+            while(getchar() != '\n'); // tampon bölgesini temizle
+            continue;
+        }
+        switch (color1)
+        {
+        case 'r':
+             colorType1=RED;
+            break;
+        
+        case 'g':
+            colorType1=GREEN;
+            break;
+        case 'b':
+            colorType1=BLUE;
+            break;
+        case 'o':
+            colorType1=ORANGE;
+            break;
+        case 'y':
+            colorType1=YELLOW;
+            break;
+        }
+        switch (color2)
+        {
+        case 'r':
+             colorType2=RED;
+            break;
+        
+        case 'g':
+            colorType2=GREEN;
+            break;
+        case 'b':
+            colorType2=BLUE;
+            break;
+        case 'o':
+            colorType2=ORANGE;
+            break;
+        case 'y':
+            colorType2=YELLOW;
+            break;
+        }
+        break;
+    }
+    colorMixer(colorType1, colorType2, mixColors);
+}
+void colorMixer(Color c1, Color c2, Color (*f)(Color, Color)) {
+    Color result = f(c1, c2);
+    printf("Mixed Color: ");
+    switch (result)
+    {
+    case 0:
+       printf("RED [1.0, 0.0, 0.0]");
+        break;
+    case 1:
+       printf("GREEN [0.0, 1.0, 0.0]");
+        break;
+    case 2:
+       printf("BLUE [0.0, 0.0, 1.0]");
+        break;
+    case 3:
+       printf("YELLOW [0.5, 0.5, 0.0]");
+        break;
+    case 4:
+        printf( "ORANGE [0.5, 0.4, 0.2]");
+        break;
+    }
+}
+Color mixColors(Color c1, Color c2) {
+    double v1[3] = {colorVectors[c1][0], colorVectors[c1][1], colorVectors[c1][2]};
+    double v2[3] = {colorVectors[c2][0], colorVectors[c2][1], colorVectors[c2][2]};
+    
+    double mixed[3];
+    for (int i = 0; i < 3; i++) {
+        mixed[i] = (v1[i] + v2[i]) / 2;
+    }
+    
+    int closest;
+    double minDist = distance(mixed, colorVectors[RED]);
+    
+    for (int i = 1; i < 5; i++) {
+        double dist = distance(mixed, colorVectors[i]);
+        if (dist < minDist) {
+            minDist = dist;
+            closest = i;
+        }
+    }
+    
+    return closest;
+}
+double distance(double v1[3], double v2[3]) {
+    double sum = 0;
+    for (int i = 0; i < 3; i++) {
+        sum += (v1[i] - v2[i]) * (v1[i] - v2[i]);
+    }
+    return sqrt(sum);
 }
 void part3(){
     char arr[3][3]={
