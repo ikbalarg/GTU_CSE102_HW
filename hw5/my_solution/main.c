@@ -156,8 +156,8 @@ Color mixColors(Color c1, Color c2) {
         mixed[i] = (v1[i] + v2[i]) / 2;
     }
     
-    int closest;
-    double minDist; //distance(mixed, colorVectors[RED]);/* variable created to hold the shortest distance*/
+    int closest=RED;
+    double minDist=distance(mixed, colorVectors[RED]); //distance(mixed, colorVectors[RED]);/* variable created to hold the shortest distance*/
     
     for (int i = 1; i < 5; i++) {
         double dist = distance(mixed, colorVectors[i]);/*calculating the distance of the blended color from the color in the corresponding index */
