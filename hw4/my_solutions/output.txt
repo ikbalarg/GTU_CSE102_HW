@@ -1,0 +1,8 @@
+	5 * Kokorec 		350.00
+	2 * Cheesecake 		160.00
+	5 * Ayran 		40.00
+	Total:   		550.00
+	Student discount:   	68.75
+	Discount:   		55.00
+	Price:   		426.25
+	Price+VAT:		502.98
